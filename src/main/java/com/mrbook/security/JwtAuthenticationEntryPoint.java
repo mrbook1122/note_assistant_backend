@@ -15,6 +15,7 @@ import java.io.IOException;
 public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
+        e.printStackTrace();
         httpServletResponse.setContentType("application/json;charset=UTF-8");
         LoginResult result = new LoginResult(401, "未登录");
         httpServletResponse.getWriter().write(JSON.toJSONString(result));

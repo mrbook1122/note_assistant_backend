@@ -36,9 +36,11 @@ public class SecurityController {
 
     @RequestMapping("/login")
     public LoginResult login(@RequestBody LoginUser loginUser) {
+        System.out.println("hello");
         UsernamePasswordAuthenticationToken token = new
                 UsernamePasswordAuthenticationToken(loginUser.getName(), loginUser.getPass());
         authenticationManager.authenticate(token);
+        System.out.println("hello2");
         Calendar calendar = Calendar.getInstance();
         Date createDate = calendar.getTime();
         String jwsToken = Jwts.builder()
@@ -46,6 +48,7 @@ public class SecurityController {
                 .setIssuedAt(createDate)
                 .signWith(secretKey)
                 .compact();
+        System.out.println("认证。。。");
         return new LoginResult(200, jwsToken);
     }
 
