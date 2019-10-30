@@ -24,20 +24,21 @@ class Test {
     private NotebookMapper notebookMapper;
 
     @org.junit.jupiter.api.Test
-    void contextLoads() {
+    void get() {
         User user = userMapper.getUserByName("mrbook");
-        Notebook notebook = notebookMapper.getById(11);
+        Notebook notebook = notebookMapper.getById(19);
         System.out.println(notebook.getUpdateTime());
+        System.out.println(notebook.getName());
     }
 
     @org.junit.jupiter.api.Test
     void insert() {
         User user = userMapper.getUserByName("mrbook");
-        System.out.println(Calendar.getInstance().getTime());
-        Date date = Calendar.getInstance().getTime();
-        date.toInstant();
-        Notebook notebook = new Notebook(Calendar.getInstance().getTime(),
-                1, "name5",user);
-        notebookMapper.save(notebook);
+        System.out.println(new Date());
+        Notebook notebook = new Notebook(new Date(),
+                1, "name1",user);
+        int i = notebookMapper.save(notebook);
+        System.out.println(notebook.getId());
+        System.out.println(i);
     }
 }
