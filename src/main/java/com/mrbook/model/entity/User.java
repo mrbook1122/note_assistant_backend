@@ -1,16 +1,25 @@
 package com.mrbook.model.entity;
 
-import javax.persistence.*;
+import org.apache.ibatis.type.Alias;
 
-@Entity
-@Table(name = "user")
+@Alias("user")
 public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
     private String name;
-    private String email;
     private String pass;
+    private String phoneNumber;//手机号
+    private String email;
+
+    public User(String name, String pass, String phoneNumber, String email) {
+        this.name = name;
+        this.pass = pass;
+        this.phoneNumber = phoneNumber;
+        this.email = email;
+    }
+
+    public User() {
+    }
 
     public int getId() {
         return id;
@@ -28,19 +37,27 @@ public class User {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPass() {
         return pass;
     }
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

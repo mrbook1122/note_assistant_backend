@@ -2,7 +2,6 @@ package com.mrbook.security.controller;
 
 import com.mrbook.model.dto.LoginResult;
 import com.mrbook.model.entity.User;
-import com.mrbook.repository.UserRepository;
 import com.mrbook.security.model.LoginUser;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -28,8 +27,8 @@ public class SecurityController {
     @Autowired
     private SecretKey secretKey;
 
-    @Autowired
-    private UserRepository userRepository;
+//    @Autowired
+//    private UserRepository userRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -52,17 +51,17 @@ public class SecurityController {
         return new LoginResult(200, jwsToken);
     }
 
-    @RequestMapping("/register")
-    public LoginResult register(@RequestBody User user) {
-        if (userRepository.findByName(user.getName()) != null) {
-            return new LoginResult(400, "name is exist");
-        }
-        user.setPass(passwordEncoder.encode(user.getPass()));
-        if (userRepository.save(user) != null) {
-            return new LoginResult(200, "success");
-        }
-        return new LoginResult(500, "error");
-    }
+//    @RequestMapping("/register")
+//    public LoginResult register(@RequestBody User user) {
+//        if (userRepository.findByName(user.getName()) != null) {
+//            return new LoginResult(400, "name is exist");
+//        }
+//        user.setPass(passwordEncoder.encode(user.getPass()));
+//        if (userRepository.save(user) != null) {
+//            return new LoginResult(200, "success");
+//        }
+//        return new LoginResult(500, "error");
+//    }
 
     @RequestMapping("/login/status")
     public LoginResult loginStatus() {

@@ -4,15 +4,15 @@ server:
 spring:
   datasource:
     username: root
-    url: jdbc:mysql://localhost/note
+    url: jdbc:mysql://47.100.136.150/note?serverTimezone=Asia/Shanghai
     password: 123456
 
-  jpa:
-    generate-ddl: true
 
+mybatis:
+  type-aliases-package: com.mrbook.model.entity
+  configuration:
+    map-underscore-to-camel-case: true
 logging:
   level:
-    org:
-      springframeword:
-        security:
-          info
+    org.springframework.security:
+      debug

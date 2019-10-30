@@ -1,20 +1,25 @@
 package com.mrbook.model.entity;
 
-import javax.persistence.*;
+import org.apache.ibatis.type.Alias;
 
-@Entity
-@Table(name = "note")
+import java.util.Date;
+
+@Alias("note")
 public class Note {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private int id;
 
-    private String url;
+    //笔记的更新时间
+    private Date updateTime;
 
-    private String note;
+    //笔记的删除时间
+    private Date deleteTime;
+    //笔记标题
+    private String title;
+    //笔记内容
+    private String content;
 
-    @ManyToOne
-    private User user;
+    private Notebook notebook;
 
     public int getId() {
         return id;
@@ -24,27 +29,43 @@ public class Note {
         this.id = id;
     }
 
-    public String getUrl() {
-        return url;
+    public Date getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
     }
 
-    public String getNote() {
-        return note;
+    public Date getDeleteTime() {
+        return deleteTime;
     }
 
-    public void setNote(String note) {
-        this.note = note;
+    public void setDeleteTime(Date deleteTime) {
+        this.deleteTime = deleteTime;
     }
 
-    public User getUser() {
-        return user;
+    public String getTitle() {
+        return title;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Notebook getNotebook() {
+        return notebook;
+    }
+
+    public void setNotebook(Notebook notebook) {
+        this.notebook = notebook;
     }
 }
