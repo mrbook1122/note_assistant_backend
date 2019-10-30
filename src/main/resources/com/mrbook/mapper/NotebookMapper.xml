@@ -7,13 +7,10 @@
         insert into notebook (update_time, status, name, user_id)
         values (#{updateTime}, #{status}, #{name}, #{user.id})
     </insert>
-    <resultMap id="notebookResultMap" type="notebook">
-        <id property="id" column="id"/>
-        <result property="updateTime" column="update_time" jdbcType="TIME"/>
-        <result property="status" column="status"/>
-        <result property="name" column="name"/>
-    </resultMap>
-    <select id="getById" resultType="notebook">
-        select * from notebook where id = #{id}
+    <delete id="delete">
+        delete from notebook where id = #{id}
+    </delete>
+    <select id="getNotebooksByUserId" resultType="notebook">
+        select * from notebook where user_id = #{id}
     </select>
 </mapper>

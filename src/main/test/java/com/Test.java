@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 @SpringBootTest(classes = NoteApplication.class)
 class Test {
@@ -24,11 +25,13 @@ class Test {
     private NotebookMapper notebookMapper;
 
     @org.junit.jupiter.api.Test
-    void get() {
+    void getAll() {
         User user = userMapper.getUserByName("mrbook");
-        Notebook notebook = notebookMapper.getById(19);
-        System.out.println(notebook.getUpdateTime());
-        System.out.println(notebook.getName());
+        System.out.println(user);
+        List<Notebook> notebooks = notebookMapper.getNotebooksByUserId(1);
+        for (Notebook notebook : notebooks) {
+            System.out.println(notebook.getName());
+        }
     }
 
     @org.junit.jupiter.api.Test
@@ -36,9 +39,16 @@ class Test {
         User user = userMapper.getUserByName("mrbook");
         System.out.println(new Date());
         Notebook notebook = new Notebook(new Date(),
-                1, "name1",user);
+                1, "name1", user);
         int i = notebookMapper.save(notebook);
         System.out.println(notebook.getId());
         System.out.println(i);
+    }
+
+    @org.junit.jupiter.api.Test
+    void update() {
+        User user = userMapper.getUserByName("mrbook");
+        user.setName("dddd");
+        userMapper.update(user);
     }
 }
