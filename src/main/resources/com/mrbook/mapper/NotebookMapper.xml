@@ -5,12 +5,24 @@
 <mapper namespace="com.mrbook.mapper.NotebookMapper">
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         insert into notebook (update_time, status, name, user_id)
-        values (#{updateTime}, #{status}, #{name}, #{user.id})
+        values (#{updateTime}, #{status}, #{name}, #{userID})
     </insert>
     <delete id="delete">
         delete from notebook where id = #{id}
     </delete>
-    <select id="getNotebooksByUserId" resultType="notebook">
+    <select id="getAllNotebooksByUser" resultType="notebook">
         select * from notebook where user_id = #{id}
     </select>
+    <select id="getNotebooksByUser" resultType="notebook">
+        select * from notebook where user_id = #{id} and status = 1
+    </select>
+    <select id="getDeleteNotebooksByUser" resultType="notebook">
+        select * from notebook where user_id = #{id} and status = 0
+    </select>
+    <update id="update">
+        update notebook set update_time = #{updateTime},
+                            status = #{status},
+                            name = #{name},
+                            user_id = #{userID} where id = #{id}
+    </update>
 </mapper>

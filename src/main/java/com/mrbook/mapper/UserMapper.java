@@ -4,7 +4,7 @@ import com.mrbook.model.entity.User;
 
 public interface UserMapper {
     //保存用户
-    int save(User user);
+    void save(User user);
 
     //删除一个用户
     void delete(User user);

@@ -13,16 +13,16 @@ public class Notebook {
     //笔记本的状态, 0表示删除，1表示未删除
     private int status;
     private String name;
-    private User user;
+    private int userID;
 
     public Notebook() {
     }
 
-    public Notebook(Date updateTime, int status, String name, User user) {
+    public Notebook(Date updateTime, int status, String name, int userID) {
         this.updateTime = updateTime;
         this.status = status;
         this.name = name;
-        this.user = user;
+        this.userID = userID;
     }
 
     public int getId() {
@@ -57,11 +57,22 @@ public class Notebook {
         this.name = name;
     }
 
-    public User getUser() {
-        return user;
+    public int getUserID() {
+        return userID;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    @Override
+    public String toString() {
+        return "Notebook{" +
+                "id=" + id +
+                ", updateTime=" + updateTime +
+                ", status=" + status +
+                ", name='" + name + '\'' +
+                ", userID=" + userID +
+                '}';
     }
 }

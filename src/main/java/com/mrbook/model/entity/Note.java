@@ -19,7 +19,7 @@ public class Note {
     //笔记内容
     private String content;
 
-    private Notebook notebook;
+    private int notebookID;
 
     public int getId() {
         return id;
@@ -61,11 +61,23 @@ public class Note {
         this.content = content;
     }
 
-    public Notebook getNotebook() {
-        return notebook;
+    public int getNotebookID() {
+        return notebookID;
     }
 
-    public void setNotebook(Notebook notebook) {
-        this.notebook = notebook;
+    public void setNotebookID(int notebookID) {
+        this.notebookID = notebookID;
+    }
+
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id=" + id +
+                ", updateTime=" + updateTime +
+                ", deleteTime=" + deleteTime +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", notebookID=" + notebookID +
+                '}';
     }
 }
