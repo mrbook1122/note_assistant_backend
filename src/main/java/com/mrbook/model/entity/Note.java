@@ -19,7 +19,21 @@ public class Note {
     //笔记内容
     private String content;
 
+    //笔记的状态信息，0表示删除，1表示正常
+    private int status;
+
     private int notebookID;
+
+    public Note() {
+    }
+
+    public Note(Date updateTime, Date deleteTime, String title, String content, int notebookID) {
+        this.updateTime = updateTime;
+        this.deleteTime = deleteTime;
+        this.title = title;
+        this.content = content;
+        this.notebookID = notebookID;
+    }
 
     public int getId() {
         return id;

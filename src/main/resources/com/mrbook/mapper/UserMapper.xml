@@ -8,15 +8,21 @@
         values (#{name}, #{pass}, #{phoneNumber}, #{email})
     </insert>
     <delete id="delete">
-        delete from user where id = #{id}
+        delete
+        from user
+        where id = #{id}
     </delete>
     <select id="getUserByName" resultType="user">
-        select * from user where name = #{name}
+        select *
+        from user
+        where name = #{name}
     </select>
     <update id="update">
-        update user set name = #{name}, pass = #{pass},
-                        phone_number = #{phoneNumber},
-                        email = #{email}
+        update user
+        set name         = #{name},
+            pass         = #{pass},
+            phone_number = #{phoneNumber},
+            email        = #{email}
         where id = #{id}
     </update>
 </mapper>
