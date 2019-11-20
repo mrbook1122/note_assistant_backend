@@ -1,21 +1,19 @@
 package com.mrbook.security.controller;
 
-import com.mrbook.model.dto.LoginResult;
-import com.mrbook.model.entity.User;
+import com.mrbook.model.dto.CommonResult;
+import com.mrbook.security.dto.UserParam;
 import com.mrbook.security.model.LoginUser;
-import io.jsonwebtoken.Jws;
+import com.mrbook.service.UserService;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.SecretKey;
+import javax.validation.Valid;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -25,21 +23,16 @@ public class SecurityController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
-    private SecretKey secretKey;
-
-//    @Autowired
-//    private UserRepository userRepository;
+    private UserService userService;
 
     @Autowired
-    private PasswordEncoder passwordEncoder;
+    private SecretKey secretKey;
 
     @RequestMapping("/login")
-    public LoginResult login(@RequestBody LoginUser loginUser) {
-        System.out.println("hello");
+    public CommonResult login(@RequestBody LoginUser loginUser) {
         UsernamePasswordAuthenticationToken token = new
                 UsernamePasswordAuthenticationToken(loginUser.getName(), loginUser.getPass());
         authenticationManager.authenticate(token);
-        System.out.println("hello2");
         Calendar calendar = Calendar.getInstance();
         Date createDate = calendar.getTime();
         String jwsToken = Jwts.builder()
@@ -47,8 +40,7 @@ public class SecurityController {
                 .setIssuedAt(createDate)
                 .signWith(secretKey)
                 .compact();
-        System.out.println("认证。。。");
-        return new LoginResult(200, jwsToken);
+        return new CommonResult(200, jwsToken);
     }
 
 //    @RequestMapping("/register")
@@ -64,12 +56,17 @@ public class SecurityController {
 //    }
 
     @RequestMapping("/login/status")
-    public LoginResult loginStatus() {
-        return new LoginResult(200, "login success");
+    public CommonResult loginStatus() {
+        return new CommonResult(200, "登录成功！");
+    }
+
+    @PostMapping("/register")
+    public CommonResult register(@RequestBody @Valid UserParam userParam, BindingResult result) {
+        return userService.register(userParam);
     }
 
     @ExceptionHandler({UsernameNotFoundException.class})
-    public LoginResult exception(UsernameNotFoundException e) {
-        return new LoginResult(500, "username not found");
+    public CommonResult exception(UsernameNotFoundException e) {
+        return new CommonResult(500, "username not found");
     }
 }

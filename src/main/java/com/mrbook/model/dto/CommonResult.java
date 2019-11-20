@@ -1,10 +1,10 @@
 package com.mrbook.model.dto;
 
-public class LoginResult {
+public class CommonResult {
     private int code;
     private String msg;
 
-    public LoginResult(int code, String msg) {
+    public CommonResult(int code, String msg) {
         this.code = code;
         this.msg = msg;
     }

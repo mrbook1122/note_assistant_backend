@@ -2,7 +2,6 @@ package com;
 
 
 import com.mrbook.NoteApplication;
-import com.mrbook.config.MyBatisConfig;
 import com.mrbook.mapper.NotebookMapper;
 import com.mrbook.mapper.UserMapper;
 import com.mrbook.model.entity.Notebook;

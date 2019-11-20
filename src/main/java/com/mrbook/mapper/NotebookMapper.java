@@ -24,4 +24,6 @@ public interface NotebookMapper {
 
     //更新一个笔记本的信息
     void update(Notebook notebook);
+
+    Notebook getNotebookById(int id);
 }

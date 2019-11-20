@@ -10,6 +10,8 @@ public class Notebook {
     private int id;
     //笔记本的状态更改时间
     private Date updateTime;
+    //笔记本的删除时间
+    private Date deleteTime;
     //笔记本的状态, 0表示删除，1表示未删除
     private int status;
     private String name;

@@ -1,10 +1,14 @@
 package com.mrbook.model.entity;
 
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 import java.util.Date;
 
 @Alias("note")
+@Data
+@NoArgsConstructor
 public class Note {
 
     private int id;
@@ -22,76 +26,20 @@ public class Note {
     //笔记的状态信息，0表示删除，1表示正常
     private int status;
 
+    /**
+     * 用户id
+     */
+    private int userID;
+
     private int notebookID;
 
-    public Note() {
-    }
-
-    public Note(Date updateTime, Date deleteTime, String title, String content, int notebookID) {
+    public Note(Date updateTime, Date deleteTime, String title, String content, int status, int userID, int notebookID) {
         this.updateTime = updateTime;
         this.deleteTime = deleteTime;
         this.title = title;
         this.content = content;
+        this.status = status;
+        this.userID = userID;
         this.notebookID = notebookID;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public Date getUpdateTime() {
-        return updateTime;
-    }
-
-    public void setUpdateTime(Date updateTime) {
-        this.updateTime = updateTime;
-    }
-
-    public Date getDeleteTime() {
-        return deleteTime;
-    }
-
-    public void setDeleteTime(Date deleteTime) {
-        this.deleteTime = deleteTime;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public int getNotebookID() {
-        return notebookID;
-    }
-
-    public void setNotebookID(int notebookID) {
-        this.notebookID = notebookID;
-    }
-
-    @Override
-    public String toString() {
-        return "Note{" +
-                "id=" + id +
-                ", updateTime=" + updateTime +
-                ", deleteTime=" + deleteTime +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", notebookID=" + notebookID +
-                '}';
     }
 }

@@ -12,7 +12,7 @@ mybatis:
   type-aliases-package: com.mrbook.model.entity
   configuration:
     map-underscore-to-camel-case: true
-logging:
-  level:
-    org.springframework.security:
-      debug
+#logging:
+#  level:
+#    org.springframework.security:
+#      debug

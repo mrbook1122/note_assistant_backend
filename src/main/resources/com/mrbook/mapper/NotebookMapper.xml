@@ -37,4 +37,9 @@
             user_id     = #{userID}
         where id = #{id}
     </update>
+    <select id="getNotebookById">
+        select *
+        from notebook
+        where id = #{id}
+    </select>
 </mapper>

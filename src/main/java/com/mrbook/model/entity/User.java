@@ -8,6 +8,7 @@ public class User {
     private int id;
     private String name;
     private String pass;
+    private String avatar;//头像
     private String phoneNumber;//手机号
     private String email;
 
@@ -43,6 +44,14 @@ public class User {
 
     public void setPass(String pass) {
         this.pass = pass;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getPhoneNumber() {

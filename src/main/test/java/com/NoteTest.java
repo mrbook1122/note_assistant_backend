@@ -28,8 +28,8 @@ public class NoteTest {
 
     @Test
     void save() {
-        Note note = new Note(new Date(), new Date(), "title1",
-                "content1", 26);
+        Note note = new Note();
+
         noteMapper.save(note);
         System.out.println(note);
     }
@@ -45,6 +45,7 @@ public class NoteTest {
         User user = userMapper.getUserByName("dddd");
         List<Notebook> notebooks = notebookMapper.getNotebooksByUser(user);
         List<Note> notes = noteMapper.getNotesByNotebook(notebooks.get(0));
+        System.out.println(notes.get(0).getUserID());
         System.out.println(notes);
     }
 }
