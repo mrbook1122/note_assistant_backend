@@ -26,4 +26,8 @@ public interface NoteMapper {
 
     //更新笔记信息
     void update(Note note);
+
+    void updateTitle(Note note);
+
+    void updateContent(Note note);
 }

@@ -43,6 +43,22 @@ public class NoteServiceImpl implements NoteService {
     }
 
     @Override
+    public CommonResult updateNoteTitle(NoteParam noteParam) {
+        Note note = noteMapper.getNoteById(noteParam.getId());
+        note.setTitle(noteParam.getTitle());
+        noteMapper.update(note);
+        return new CommonResult(200, "更新成功");
+    }
+
+    @Override
+    public CommonResult updateNoteContent(NoteParam noteParam) {
+        Note note = noteMapper.getNoteById(noteParam.getId());
+        note.setContent(noteParam.getContent());
+        noteMapper.update(note);
+        return new CommonResult(200, "更新成功");
+    }
+
+    @Override
     public Note getNoteById(int id) {
         return noteMapper.getNoteById(id);
     }

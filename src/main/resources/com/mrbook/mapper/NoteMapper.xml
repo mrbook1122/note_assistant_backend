@@ -4,8 +4,8 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mrbook.mapper.NoteMapper">
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into note (update_time, delete_time, title, content, notebook_id)
-        values (#{updateTime}, #{deleteTime}, #{title}, #{content}, #{notebookID})
+        insert into note (update_time, delete_time, title, content, status, notebook_id)
+        values (#{updateTime}, #{deleteTime}, #{title}, #{content}, #{status}, #{notebookID})
     </insert>
     <delete id="delete">
         delete
@@ -32,6 +32,16 @@
             content     = #{content},
             status      = #{status},
             notebook_id = #{notebookID}
+        where id = #{id}
+    </update>
+    <update id="updateTitle">
+        update note
+        set title = #{title}
+        where id = #{id}
+    </update>
+    <update id="updateContent">
+        update note
+        set content = #{content}
         where id = #{id}
     </update>
     <select id="getNoteById" resultType="note">

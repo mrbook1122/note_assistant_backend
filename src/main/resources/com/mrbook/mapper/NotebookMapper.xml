@@ -15,12 +15,12 @@
     <select id="getAllNotebooksByUser" resultType="notebook">
         select *
         from notebook
-        where user_id = #{id}
+        where user_id = (select id from user where name = #{name})
     </select>
     <select id="getNotebooksByUser" resultType="notebook">
         select *
         from notebook
-        where user_id = #{id}
+        where user_id = (select id from user where name = #{name})
           and status = 1
     </select>
     <select id="getDeleteNotebooksByUser" resultType="notebook">

@@ -11,6 +11,10 @@ public interface NoteService {
 
     CommonResult updateNote(NoteParam noteParam);
 
+    CommonResult updateNoteTitle(NoteParam noteParam);
+
+    CommonResult updateNoteContent(NoteParam noteParam);
+
     Note getNoteById(int id);
 
     List<Note> getNoteByNotebookId(int id);

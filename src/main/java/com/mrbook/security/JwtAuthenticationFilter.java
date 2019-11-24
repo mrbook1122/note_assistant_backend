@@ -26,12 +26,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = httpServletRequest.getHeader("Token");
         if (token != null) {
             String name = null;
-            name = jwtUtils.getNameFromToken(token);
-            Set<GrantedAuthority> authorities = new HashSet<>();
-            UsernamePasswordAuthenticationToken authenticationToken = new
-                    UsernamePasswordAuthenticationToken(name, null,
-                    authorities);
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            try {
+                name = jwtUtils.getNameFromToken(token);
+                Set<GrantedAuthority> authorities = new HashSet<>();
+                UsernamePasswordAuthenticationToken authenticationToken = new
+                        UsernamePasswordAuthenticationToken(name, null,
+                        authorities);
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            } catch (Exception e) {
+            }
         }
         filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
