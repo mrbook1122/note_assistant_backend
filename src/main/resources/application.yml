@@ -1,15 +1,7 @@
 server:
   port: 80
-
-spring:
-  datasource:
-    username: root
-    url: jdbc:mysql://47.100.136.150/note
-    password: 123456
-    hikari:
-      max-lifetime: 50000
-
-
+  servlet:
+    context-path: /api
 mybatis:
   type-aliases-package: com.mrbook.model.entity
   configuration:

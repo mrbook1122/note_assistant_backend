@@ -1,7 +1,9 @@
 package com.mrbook.mapper;
 
 import com.mrbook.model.entity.User;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface UserMapper {
     //保存用户
     void save(User user);

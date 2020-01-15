@@ -1,7 +1,8 @@
 package com.mrbook.security.controller;
 
-import com.mrbook.model.dto.CommonResult;
-import com.mrbook.security.dto.UserParam;
+import com.mrbook.model.dto.CommonDTO;
+import com.mrbook.model.dto.ResultCode;
+import com.mrbook.security.dto.UserDTO;
 import com.mrbook.security.model.LoginUser;
 import com.mrbook.service.UserService;
 import io.jsonwebtoken.Jwts;
@@ -29,7 +30,7 @@ public class SecurityController {
     private SecretKey secretKey;
 
     @RequestMapping("/login")
-    public CommonResult login(@RequestBody LoginUser loginUser) {
+    public CommonDTO login(@RequestBody LoginUser loginUser) {
         UsernamePasswordAuthenticationToken token = new
                 UsernamePasswordAuthenticationToken(loginUser.getName(), loginUser.getPass());
         authenticationManager.authenticate(token);
@@ -40,7 +41,7 @@ public class SecurityController {
                 .setIssuedAt(createDate)
                 .signWith(secretKey)
                 .compact();
-        return new CommonResult(200, jwsToken);
+        return new CommonDTO(ResultCode.SUCCESS, jwsToken);
     }
 
 //    @RequestMapping("/register")
@@ -56,17 +57,17 @@ public class SecurityController {
 //    }
 
     @RequestMapping("/login/status")
-    public CommonResult loginStatus() {
-        return new CommonResult(200, "登录成功！");
+    public CommonDTO loginStatus() {
+        return new CommonDTO(ResultCode.SUCCESS, "登录成功！");
     }
 
     @PostMapping("/register")
-    public CommonResult register(@RequestBody @Valid UserParam userParam, BindingResult result) {
-        return userService.register(userParam);
+    public CommonDTO register(@RequestBody @Valid UserDTO userDTO, BindingResult result) {
+        return userService.register(userDTO);
     }
 
     @ExceptionHandler({UsernameNotFoundException.class})
-    public CommonResult exception(UsernameNotFoundException e) {
-        return new CommonResult(500, "username not found");
+    public CommonDTO exception(UsernameNotFoundException e) {
+        return new CommonDTO(ResultCode.REQUEST_ERROR, "username not found");
     }
 }

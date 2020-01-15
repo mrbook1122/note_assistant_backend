@@ -1,14 +1,14 @@
 package com.mrbook.security.dto;
 
+import com.mrbook.model.entity.User;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 @Data
-public class UserParam {
+public class UserDTO {
     @NotBlank(message = "用户名不能为空")
     private String name;
 
@@ -20,4 +20,10 @@ public class UserParam {
 
     @NotBlank(message = "密码不能为空")
     private String pass;
+
+    private String avatar;
+
+    public User convertTo() {
+        return new User(name, pass, avatar, phone, email);
+    }
 }

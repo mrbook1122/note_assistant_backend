@@ -1,60 +1,51 @@
 package com.mrbook.controller;
 
-import com.mrbook.model.dto.CommonResult;
-import com.mrbook.model.dto.NoteListResp;
-import com.mrbook.model.dto.NoteParam;
-import com.mrbook.model.dto.NoteResp;
-import com.mrbook.model.entity.Note;
+import com.mrbook.model.dto.CommonDTO;
+import com.mrbook.model.dto.CommonDataDTO;
+import com.mrbook.model.dto.NoteDTO;
+import com.mrbook.model.dto.NoteRespDTO;
 import com.mrbook.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
+@RequestMapping("/note")
 public class NoteController {
     @Autowired
     private NoteService noteService;
 
-    @RequestMapping("/note/add")
-    public NoteResp addNote(@RequestBody NoteParam noteParam) {
-        NoteResp noteResp = new NoteResp();
-        noteResp.setNote(noteService.saveNote(noteParam));
-        noteResp.setCode(200);
-        return noteResp;
+    /**
+     * 添加笔记
+     */
+    @PutMapping("/add")
+    public CommonDataDTO<Integer> addNote(@RequestBody NoteDTO noteDTO) {
+        return noteService.saveNote(noteDTO);
     }
 
-    @RequestMapping("/note/update")
-    public CommonResult updateNote(@RequestBody NoteParam noteParam) {
-        return noteService.updateNote(noteParam);
+    /**
+     * 更新笔记标题
+     */
+    @PutMapping("/{id}/title")
+    public CommonDTO updateNoteTitle(@PathVariable int id, @RequestBody String title) {
+        return noteService.updateNoteTitle(id, title);
     }
 
-    @RequestMapping("/note/update/title")
-    public CommonResult updateNoteTitle(@RequestBody NoteParam noteParam) {
-        return noteService.updateNoteTitle(noteParam);
-    }
-
-    @RequestMapping("/note/update/content")
-    public CommonResult updateNoteContent(@RequestBody NoteParam noteParam) {
-        return noteService.updateNoteContent(noteParam);
-    }
-
-    @RequestMapping("/note/list")
-    public NoteListResp noteList(int id) {
-        NoteListResp resp = new NoteListResp();
-        resp.setNotes(noteService.getNoteByNotebookId(id));
-        resp.setCode(200);
-        return resp;
+    /**
+     * 更新笔记内容
+     */
+    @PutMapping("/{id}/content")
+    public CommonDTO updateNoteContent(@PathVariable int id, @RequestBody String content) {
+        return noteService.updateNoteContent(id, content);
     }
 
 //    @RequestMapping(value = "/note/delete", method = RequestMethod.DELETE)
 //    public CommonResult deleteNote()
 
-    @RequestMapping("/note/info")
-    public NoteResp noteInfo(int id) {
-        NoteResp noteResp = new NoteResp();
-        noteResp.setNote(noteService.getNoteById(id));
-        noteResp.setCode(200);
-        return noteResp;
+    /**
+     * 获取一条笔记的详细信息
+     */
+    @GetMapping("/{id}")
+    public NoteRespDTO noteInfo(@PathVariable int id) {
+        return noteService.getNoteById(id);
     }
 }

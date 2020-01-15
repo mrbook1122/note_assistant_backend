@@ -1,7 +1,8 @@
 package com.mrbook.security;
 
 import com.alibaba.fastjson.JSON;
-import com.mrbook.model.dto.CommonResult;
+import com.mrbook.model.dto.CommonDTO;
+import com.mrbook.model.dto.ResultCode;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
 //        e.printStackTrace();
         httpServletResponse.setContentType("application/json;charset=UTF-8");
-        CommonResult result = new CommonResult(401, "未登录");
+        CommonDTO result = new CommonDTO(ResultCode.UNAUTHORIZED, "未登录");
         httpServletResponse.getWriter().write(JSON.toJSONString(result));
     }
 }

@@ -1,83 +1,51 @@
 package com.mrbook.model.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.apache.ibatis.type.Alias;
 
 @Alias("user")
+@Data
+@NoArgsConstructor
 public class User {
-
-    private int id;
-    private String name;
-    private String pass;
-    private String avatar;//头像
-    private String phoneNumber;//手机号
-    private String email;
-
-    public User(String name, String pass, String phoneNumber, String email) {
+    /**
+     * @param name 用户名
+     * @param pass 密码
+     * @param avatar 头像url
+     * @param phoneNumber 手机号
+     * @param email 邮箱
+     */
+    public User(String name, String pass, String avatar, String phoneNumber, String email) {
         this.name = name;
         this.pass = pass;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
-    }
-
-    public User() {
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getPass() {
-        return pass;
-    }
-
-    public void setPass(String pass) {
-        this.pass = pass;
-    }
-
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", pass='" + pass + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+    /**
+     * 用户id
+     */
+    private int id;
+    /**
+     * 用户名
+     */
+    private String name;
+    /**
+     * 密码
+     */
+    private String pass;
+    /**
+     * 用户头像
+     */
+    private String avatar;
+    /**
+     * 手机号
+     */
+    private String phoneNumber;
+    /**
+     * 邮箱
+     */
+    private String email;
 }

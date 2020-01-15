@@ -1,8 +1,8 @@
 package com.mrbook.service;
 
-import com.mrbook.model.dto.CommonResult;
-import com.mrbook.security.dto.UserParam;
+import com.mrbook.model.dto.CommonDTO;
+import com.mrbook.security.dto.UserDTO;
 
 public interface UserService {
-    CommonResult register(UserParam userParam);
+    CommonDTO register(UserDTO userDTO);
 }

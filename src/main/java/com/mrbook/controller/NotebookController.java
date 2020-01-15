@@ -1,39 +1,44 @@
 package com.mrbook.controller;
 
-import com.mrbook.model.dto.CommonResult;
-import com.mrbook.model.dto.NotebookListResp;
-import com.mrbook.model.dto.NotebookParam;
-import com.mrbook.model.dto.NotebookResp;
+import com.mrbook.model.dto.*;
 import com.mrbook.service.NotebookService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
+@RequestMapping("/notebook")
 public class NotebookController {
     @Autowired
     private NotebookService notebookService;
 
-    @RequestMapping("/notebook/list")
-    public NotebookListResp notebookList() {
-        NotebookListResp resp = new NotebookListResp();
-        resp.setCode(200);
-        resp.setNotebooks(notebookService.getAllNotebooks());
-        return resp;
+//    @GetMapping("/list")
+//    public List<NotebookDTO> notebookList() {
+//        NotebookListDTO resp = new NotebookListDTO();
+//        resp.setCode(200);
+//        resp.setNotebooks(notebookService.getAllNotebooks());
+//        return resp;
+//    }
+
+    /**
+     * 获取笔记本中的笔记列表
+     */
+    @RequestMapping("/{id}/note/list")
+    public List<NoteRespDTO> noteList(@PathVariable int id) {
+        return notebookService.getNotesByNotebook(id);
     }
 
-    @RequestMapping("/notebook/add")
-    public NotebookResp addNotebook(@RequestBody NotebookParam notebookParam) {
-        NotebookResp resp = new NotebookResp();
-        resp.setCode(200);
-        resp.setNotebook(notebookService.saveNotebook(notebookParam));
-        return resp;
-    }
+//    @RequestMapping("/add")
+//    public NotebookResp addNotebook(@RequestBody NotebookDTO notebookDTO) {
+//        NotebookResp resp = new NotebookResp();
+//        resp.setCode(200);
+//        resp.setNotebook(notebookService.saveNotebook(notebookDTO));
+//        return resp;
+//    }
 
-    @DeleteMapping("/notebook/delete")
-    public CommonResult deleteNotebook(@RequestBody NotebookParam notebookParam) {
-        return notebookService.deleteNotebook(notebookParam.getId());
+    @DeleteMapping("/delete")
+    public CommonDTO deleteNotebook(@RequestBody NotebookDTO notebookDTO) {
+        return notebookService.deleteNotebook(notebookDTO.getId());
     }
 }

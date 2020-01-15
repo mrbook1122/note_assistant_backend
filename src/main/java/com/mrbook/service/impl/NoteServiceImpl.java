@@ -1,19 +1,16 @@
 package com.mrbook.service.impl;
 
+import com.mrbook.exception.NoteTitleAndContentNullException;
 import com.mrbook.mapper.NoteMapper;
 import com.mrbook.mapper.UserMapper;
-import com.mrbook.model.dto.CommonResult;
-import com.mrbook.model.dto.NoteParam;
+import com.mrbook.model.dto.*;
 import com.mrbook.model.entity.Note;
-import com.mrbook.model.entity.Notebook;
 import com.mrbook.model.entity.User;
 import com.mrbook.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-
-import java.util.Date;
-import java.util.List;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Service
 public class NoteServiceImpl implements NoteService {
@@ -24,49 +21,39 @@ public class NoteServiceImpl implements NoteService {
     private UserMapper userMapper;
 
     @Override
-    public Note saveNote(NoteParam noteParam) {
+    public CommonDataDTO<Integer> saveNote(NoteDTO noteDTO) {
+        // 如果笔记标题和内容都为空，则抛异常
+        if ((noteDTO.getTitle() == null || noteDTO.getTitle().trim().equals("")) &&
+                (noteDTO.getContent() == null || noteDTO.getContent().trim().equals(""))) {
+            throw new NoteTitleAndContentNullException();
+        }
         String name = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userMapper.getUserByName(name);
-        Note note = new Note(new Date(), null, noteParam.getTitle(), noteParam.getContent(),
-                1, user.getId(), noteParam.getNotebookID());
+        Note note = noteDTO.convertToNote(user.getId());
         noteMapper.save(note);
-        return note;
+        return new CommonDataDTO<>(ResultCode.SUCCESS, "添加成功", note.getId());
     }
 
     @Override
-    public CommonResult updateNote(NoteParam noteParam) {
-        Note note = noteMapper.getNoteById(noteParam.getId());
-        note.setTitle(noteParam.getTitle());
-        note.setContent(noteParam.getContent());
-        noteMapper.update(note);
-        return new CommonResult(200, "更新成功");
+    public CommonDTO updateNoteTitle(int id, String title) {
+        noteMapper.updateNoteTitle(id, title);
+        return new CommonDTO(ResultCode.SUCCESS, "更新成功");
     }
 
     @Override
-    public CommonResult updateNoteTitle(NoteParam noteParam) {
-        Note note = noteMapper.getNoteById(noteParam.getId());
-        note.setTitle(noteParam.getTitle());
-        noteMapper.update(note);
-        return new CommonResult(200, "更新成功");
+    public CommonDTO updateNoteContent(int id, String content) {
+        noteMapper.updateNoteContent(id, content);
+        return new CommonDTO(ResultCode.SUCCESS, "更新成功");
     }
 
     @Override
-    public CommonResult updateNoteContent(NoteParam noteParam) {
-        Note note = noteMapper.getNoteById(noteParam.getId());
-        note.setContent(noteParam.getContent());
-        noteMapper.update(note);
-        return new CommonResult(200, "更新成功");
+    public NoteRespDTO getNoteById(int id) {
+        NoteRespDTO dto = NoteRespDTO.convertFromEntity(noteMapper.getNoteById(id));
+        return dto;
     }
 
-    @Override
-    public Note getNoteById(int id) {
-        return noteMapper.getNoteById(id);
-    }
-
-    @Override
-    public List<Note> getNoteByNotebookId(int id) {
-        Notebook notebook = new Notebook();
-        notebook.setId(id);
-        return noteMapper.getNotesByNotebook(notebook);
+    @ExceptionHandler(NoteTitleAndContentNullException.class)
+    public CommonDTO noteTitleAndContentNullException() {
+        return new CommonDTO(ResultCode.REQUEST_ERROR, "笔记标题和内容为空");
     }
 }

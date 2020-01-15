@@ -4,42 +4,42 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mrbook.mapper.NotebookMapper">
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
-        insert into notebook (update_time, status, name, user_id)
-        values (#{updateTime}, #{status}, #{name}, #{userID})
+        INSERT INTO notebook (create_time, update_time, status, name, user_id)
+        VALUES (now(), now(), 1, #{name}, #{userId})
     </insert>
     <delete id="delete">
-        delete
-        from notebook
-        where id = #{id}
+        DELETE
+        FROM notebook
+        WHERE id = #{id}
     </delete>
-    <select id="getAllNotebooksByUser" resultType="notebook">
-        select *
-        from notebook
-        where user_id = (select id from user where name = #{name})
+    <select id="getAllNotebooksByUsername" resultType="notebook">
+        SELECT *
+        FROM notebook
+        WHERE user_id = (SELECT id FROM user WHERE name = #{name})
     </select>
-    <select id="getNotebooksByUser" resultType="notebook">
-        select *
-        from notebook
-        where user_id = (select id from user where name = #{name})
-          and status = 1
+    <select id="getNotebooksByUsername" resultType="notebook">
+        SELECT *
+        FROM notebook
+        WHERE user_id = (SELECT id FROM user WHERE name = #{name})
+          AND status = 1
     </select>
-    <select id="getDeleteNotebooksByUser" resultType="notebook">
-        select *
-        from notebook
-        where user_id = #{id}
-          and status = 0
+    <select id="getDeleteNotebooksByUsername" resultType="notebook">
+        SELECT *
+        FROM notebook
+        WHERE user_id = #{id}
+          AND status = 0
     </select>
     <update id="update">
-        update notebook
-        set update_time = #{updateTime},
+        UPDATE notebook
+        SET update_time = #{updateTime},
             status      = #{status},
             name        = #{name},
-            user_id     = #{userID}
-        where id = #{id}
+            user_id     = #{userId}
+        WHERE id = #{id}
     </update>
     <select id="getNotebookById">
-        select *
-        from notebook
-        where id = #{id}
+        SELECT *
+        FROM notebook
+        WHERE id = #{id}
     </select>
 </mapper>
