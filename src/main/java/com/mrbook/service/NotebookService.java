@@ -1,6 +1,7 @@
 package com.mrbook.service;
 
 import com.mrbook.model.dto.CommonDTO;
+import com.mrbook.model.dto.CommonDataDTO;
 import com.mrbook.model.dto.NoteRespDTO;
 import com.mrbook.model.dto.NotebookDTO;
 import com.mrbook.model.entity.Notebook;
@@ -14,10 +15,17 @@ public interface NotebookService {
     List<NotebookDTO> getAllNotebooks();
 
     /**
-     * 保存一篇笔记
+     * 新建一个笔记本
+     * @param notebookDTO 包含笔记本名称
+     * @return data部分为笔记本id
      */
-    Notebook saveNotebook(NotebookDTO notebookDTO);
+    CommonDataDTO<Integer> saveNotebook(NotebookDTO notebookDTO);
 
+    /**
+     * 删除笔记本
+     * @param id 笔记本id
+     * @return 操作结果的状态
+     */
     CommonDTO deleteNotebook(int id);
 
     /**

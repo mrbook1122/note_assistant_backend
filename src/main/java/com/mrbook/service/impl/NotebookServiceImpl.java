@@ -3,10 +3,7 @@ package com.mrbook.service.impl;
 import com.mrbook.mapper.NoteMapper;
 import com.mrbook.mapper.NotebookMapper;
 import com.mrbook.mapper.UserMapper;
-import com.mrbook.model.dto.CommonDTO;
-import com.mrbook.model.dto.NoteRespDTO;
-import com.mrbook.model.dto.NotebookDTO;
-import com.mrbook.model.dto.ResultCode;
+import com.mrbook.model.dto.*;
 import com.mrbook.model.entity.Note;
 import com.mrbook.model.entity.Notebook;
 import com.mrbook.model.entity.User;
@@ -14,6 +11,7 @@ import com.mrbook.service.NotebookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,18 +39,17 @@ public class NotebookServiceImpl implements NotebookService {
     }
 
     @Override
-    public Notebook saveNotebook(NotebookDTO notebookDTO) {
+    @Transactional
+    public CommonDataDTO<Integer> saveNotebook(NotebookDTO notebookDTO) {
         String name = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userMapper.getUserByName(name);
-        Notebook notebook = new Notebook();
-        notebook.setStatus(1);
-        notebook.setName(notebookDTO.getName());
-        notebook.setUserId(user.getId());
+        Notebook notebook = new Notebook(notebookDTO.getName(), user.getId());
         notebookMapper.save(notebook);
-        return notebook;
+        return new CommonDataDTO<>(ResultCode.SUCCESS, "添加成功", notebook.getId());
     }
 
     @Override
+    @Transactional
     public CommonDTO deleteNotebook(int id) {
         Notebook notebook = notebookMapper.getNotebookById(id);
         notebook.setStatus(0);

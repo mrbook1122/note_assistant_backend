@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService {
             return new CommonDTO(ResultCode.REQUEST_ERROR, "用户名已存在");
         User user = userDTO.convertTo();
         user.setPass(passwordEncoder.encode(user.getPass()));
+        userMapper.save(user);
         return new CommonDTO(ResultCode.SUCCESS, "注册成功");
     }
 }

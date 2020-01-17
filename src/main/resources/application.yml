@@ -2,11 +2,16 @@ server:
   port: 80
   servlet:
     context-path: /api
+
 mybatis:
   type-aliases-package: com.mrbook.model.entity
   configuration:
     map-underscore-to-camel-case: true
+
 #logging:
 #  level:
 #    org.springframework.security:
 #      debug
+spring:
+  jackson:
+    date-format: yyyy-MM-dd hh:mm

@@ -44,25 +44,19 @@ public class SecurityController {
         return new CommonDTO(ResultCode.SUCCESS, jwsToken);
     }
 
-//    @RequestMapping("/register")
-//    public LoginResult register(@RequestBody User user) {
-//        if (userRepository.findByName(user.getName()) != null) {
-//            return new LoginResult(400, "name is exist");
-//        }
-//        user.setPass(passwordEncoder.encode(user.getPass()));
-//        if (userRepository.save(user) != null) {
-//            return new LoginResult(200, "success");
-//        }
-//        return new LoginResult(500, "error");
-//    }
-
+    /**
+     * 请求用户登录状态
+     */
     @RequestMapping("/login/status")
     public CommonDTO loginStatus() {
         return new CommonDTO(ResultCode.SUCCESS, "登录成功！");
     }
 
+    /**
+     * 用户注册
+     */
     @PostMapping("/register")
-    public CommonDTO register(@RequestBody @Valid UserDTO userDTO, BindingResult result) {
+    public CommonDTO register(@RequestBody @Valid UserDTO userDTO) {
         return userService.register(userDTO);
     }
 

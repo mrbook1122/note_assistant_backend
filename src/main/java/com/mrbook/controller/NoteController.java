@@ -17,7 +17,7 @@ public class NoteController {
     /**
      * 添加笔记
      */
-    @PutMapping("/add")
+    @PutMapping("")
     public CommonDataDTO<Integer> addNote(@RequestBody NoteDTO noteDTO) {
         return noteService.saveNote(noteDTO);
     }
@@ -25,21 +25,26 @@ public class NoteController {
     /**
      * 更新笔记标题
      */
-    @PutMapping("/{id}/title")
-    public CommonDTO updateNoteTitle(@PathVariable int id, @RequestBody String title) {
-        return noteService.updateNoteTitle(id, title);
+    @PostMapping("/{id}/title")
+    public CommonDTO updateNoteTitle(@PathVariable int id, @RequestBody NoteDTO noteDTO) {
+        return noteService.updateNoteTitle(id, noteDTO.getTitle());
     }
 
     /**
      * 更新笔记内容
      */
-    @PutMapping("/{id}/content")
-    public CommonDTO updateNoteContent(@PathVariable int id, @RequestBody String content) {
-        return noteService.updateNoteContent(id, content);
+    @PostMapping("/{id}/content")
+    public CommonDTO updateNoteContent(@PathVariable int id, @RequestBody NoteDTO noteDTO) {
+        return noteService.updateNoteContent(id, noteDTO.getContent());
     }
 
-//    @RequestMapping(value = "/note/delete", method = RequestMethod.DELETE)
-//    public CommonResult deleteNote()
+    /**
+     * 暂时删除一条笔记
+     */
+    @DeleteMapping(value = "/{id}")
+    public CommonDTO deleteNote(@PathVariable int id) {
+        return noteService.deleteNote(id);
+    }
 
     /**
      * 获取一条笔记的详细信息

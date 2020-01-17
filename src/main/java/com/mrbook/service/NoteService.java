@@ -4,9 +4,6 @@ import com.mrbook.model.dto.CommonDTO;
 import com.mrbook.model.dto.CommonDataDTO;
 import com.mrbook.model.dto.NoteDTO;
 import com.mrbook.model.dto.NoteRespDTO;
-import com.mrbook.model.entity.Note;
-
-import java.util.List;
 
 public interface NoteService {
     /**
@@ -28,4 +25,9 @@ public interface NoteService {
      * 获取笔记的详细信息，包括笔记内容
      */
     NoteRespDTO getNoteById(int id);
+
+    /**
+     * 删除笔记
+     */
+    CommonDTO deleteNote(int id);
 }

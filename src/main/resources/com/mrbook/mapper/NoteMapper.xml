@@ -5,7 +5,7 @@
 <mapper namespace="com.mrbook.mapper.NoteMapper">
     <insert id="save" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO note (create_time, update_time, title, content, status, notebook_id, user_id)
-        VALUES (now(), now(), #{title}, #{content}, 1, #{notebookId}, #{user_id})
+        VALUES (now(), now(), #{title}, #{content}, 1, #{notebookId}, #{userId})
     </insert>
     <delete id="delete">
         DELETE

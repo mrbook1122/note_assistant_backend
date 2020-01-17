@@ -10,6 +10,7 @@ import com.mrbook.service.NoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @Service
@@ -22,11 +23,12 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public CommonDataDTO<Integer> saveNote(NoteDTO noteDTO) {
-        // 如果笔记标题和内容都为空，则抛异常
-        if ((noteDTO.getTitle() == null || noteDTO.getTitle().trim().equals("")) &&
-                (noteDTO.getContent() == null || noteDTO.getContent().trim().equals(""))) {
-            throw new NoteTitleAndContentNullException();
-        }
+        /// 暂时不进行笔记标题和内容都为空的判断
+        //        // 如果笔记标题和内容都为空，则抛异常
+//        if ((noteDTO.getTitle() == null || noteDTO.getTitle().trim().equals("")) &&
+//                (noteDTO.getContent() == null || noteDTO.getContent().trim().equals(""))) {
+//            throw new NoteTitleAndContentNullException();
+//        }
         String name = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userMapper.getUserByName(name);
         Note note = noteDTO.convertToNote(user.getId());
@@ -48,8 +50,16 @@ public class NoteServiceImpl implements NoteService {
 
     @Override
     public NoteRespDTO getNoteById(int id) {
-        NoteRespDTO dto = NoteRespDTO.convertFromEntity(noteMapper.getNoteById(id));
-        return dto;
+        return NoteRespDTO.convertFromEntity(noteMapper.getNoteById(id));
+    }
+
+    @Override
+    @Transactional
+    public CommonDTO deleteNote(int id) {
+        Note note = noteMapper.getNoteById(id);
+        note.setStatus(0);
+        noteMapper.update(note);
+        return new CommonDTO(ResultCode.SUCCESS, "删除成功");
     }
 
     @ExceptionHandler(NoteTitleAndContentNullException.class)

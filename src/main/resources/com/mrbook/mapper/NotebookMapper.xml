@@ -37,7 +37,7 @@
             user_id     = #{userId}
         WHERE id = #{id}
     </update>
-    <select id="getNotebookById">
+    <select id="getNotebookById" resultType="notebook">
         SELECT *
         FROM notebook
         WHERE id = #{id}
