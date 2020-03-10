@@ -18,7 +18,8 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AuthenticationException e) throws IOException, ServletException {
 //        e.printStackTrace();
         httpServletResponse.setContentType("application/json;charset=UTF-8");
-        CommonDTO result = new CommonDTO(ResultCode.UNAUTHORIZED, "未登录");
+        CommonDTO result = new CommonDTO(ResultCode.UNAUTHORIZED, e.getMessage());
+        // TODO 使用jackson
         httpServletResponse.getWriter().write(JSON.toJSONString(result));
     }
 }

@@ -44,4 +44,13 @@ public class NotebookController {
     public CommonDTO deleteNotebook(@PathVariable int id) {
         return notebookService.deleteNotebook(id);
     }
+
+    /**
+     * 更新笔记本的名称
+     * @param name 笔记本的新名称
+     */
+    @PostMapping("/{id}")
+    public CommonDTO updateNotebookName(@PathVariable int id, String name) {
+        return notebookService.updateNotebookName(id, name);
+    }
 }

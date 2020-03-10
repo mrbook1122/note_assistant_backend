@@ -66,4 +66,16 @@ public class NotebookServiceImpl implements NotebookService {
         }
         return result;
     }
+
+    @Override
+    public CommonDTO updateNotebookName(int id, String name) {
+        /**
+         * TODO
+         * 对于传入的新的笔记本名称，需要先判断是否有重复的笔记本名称，
+         * 如果不判断直接插入可能会报java.sql.SQLIntegrityConstraintViolationException异常
+         * 判断的话需要查询两次数据库，可能存在性能浪费
+         */
+        notebookMapper.updateNotebookName(id, name);
+        return new CommonDTO(ResultCode.SUCCESS, "更新成功");
+    }
 }

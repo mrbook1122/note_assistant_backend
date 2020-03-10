@@ -16,7 +16,9 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         User user = userMapper.getUserByName(s);
-        // TODO 用户名不存在的情况需要处理
+        if (user == null) {
+            throw new UsernameNotFoundException("用户名不存在");
+        }
         return new JwtUserDetails(user.getName(), user.getPass());
     }
 }

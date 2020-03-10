@@ -34,4 +34,9 @@ public interface NotebookService {
      * @return 笔记列表
      */
     List<NoteRespDTO> getNotesByNotebook(int notebookId);
+
+    /**
+     * 更改笔记本名称
+     */
+    CommonDTO updateNotebookName(int id, String name);
 }

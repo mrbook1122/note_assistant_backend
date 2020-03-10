@@ -39,7 +39,21 @@ public interface NotebookMapper {
     void update(Notebook notebook);
 
     /**
+     * 更新笔记本的名称
+     */
+    void updateNotebookName(int id, String name);
+
+    /**
      * 根据id获取笔记本
      */
     Notebook getNotebookById(int id);
+
+    /**
+     * 对于传入的笔记本id的对应的笔记本名称，判断该用户是否有其他笔记本与传入的新笔记本名称重复
+     *
+     * @param notebookId      要修改名称的笔记本的id
+     * @param newNotebookName 传入的新的笔记本名称
+     * @return notebook 名称重复的笔记本对象(也可能返回本notebookId对应的对象)
+     */
+    Notebook getDuplicateNotebookNameNotebook(int notebookId, String newNotebookName);
 }

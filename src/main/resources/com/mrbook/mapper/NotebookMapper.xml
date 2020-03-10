@@ -37,9 +37,24 @@
             user_id     = #{userId}
         WHERE id = #{id}
     </update>
+    <update id="updateNotebookName">
+        UPDATE notebook
+        SET name = #{name}
+        WHERE id = #{id}
+    </update>
     <select id="getNotebookById" resultType="notebook">
         SELECT *
         FROM notebook
         WHERE id = #{id}
+    </select>
+    <select id="getDuplicateNotebookNameNotebook" resultType="notebook">
+        SELECT *
+        FROM notebook
+        WHERE name = #{newNotebookName}
+          AND user_id = (
+            SELECT user_id
+            FROM notebook
+            WHERE id = #{notebookId}
+        )
     </select>
 </mapper>
